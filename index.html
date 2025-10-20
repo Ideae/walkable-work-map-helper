@@ -57,7 +57,7 @@
           const lon = pos.coords.longitude.toFixed(6);
           const message = `My location is ${lat}, ${lon}. Find work spots within 5–10 minutes walk.`;
           const encodedMessage = encodeURIComponent(message);
-          const gptId = 'REPLACE_THIS_WITH_YOUR_GPT_ID';
+          const gptId = 'g-68f68b370f588191a4962284ad17a3f7';
           const gptLink = `https://chat.openai.com/g/${gptId}?message=${encodedMessage}`;
 
           output.innerHTML = `✅ Location acquired!<br><br>` +
