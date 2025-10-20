@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walkable Work Map Launcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+      color: #333;
+      text-align: center;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #output {
+      margin-top: 2rem;
+      white-space: pre-wrap;
+    }
+    a {
+      color: #0066cc;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📍 Launch Walkable Work Map</h1>
+  <p>Click the button below to share your location and open the GPT with work spots nearby.</p>
+  <button onclick="getLocation()">Use My Location</button>
+  <div id="output"></div>
+
+  <script>
+    function getLocation() {
+      const output = document.getElementById('output');
+      if (!navigator.geolocation) {
+        output.textContent = 'Geolocation is not supported by your browser.';
+        return;
+      }
+
+      output.textContent = 'Getting your location...';
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude.toFixed(6);
+          const lon = pos.coords.longitude.toFixed(6);
+          const message = `My location is ${lat}, ${lon}. Find work spots within 5–10 minutes walk.`;
+          const encodedMessage = encodeURIComponent(message);
+          const gptId = 'REPLACE_THIS_WITH_YOUR_GPT_ID';
+          const gptLink = `https://chat.openai.com/g/${gptId}?message=${encodedMessage}`;
+
+          output.innerHTML = `✅ Location acquired!<br><br>` +
+            `<a href="${gptLink}" target="_blank">Click here to launch Walkable Work Map GPT</a><br><br>` +
+            `Or copy this prompt manually:<br><code>${message}</code>`;
+        },
+        () => {
+          output.textContent = 'Unable to retrieve your location. Please allow location access or enter manually.';
+        }
+      );
+    }
+  </script>
+</body>
+</html>
